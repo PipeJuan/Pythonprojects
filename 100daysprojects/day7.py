@@ -24,5 +24,6 @@ def init():
             print("Wrong")
 
 
+    # Step 1 finalizado 
 if __name__ == '__main__':
     init()
