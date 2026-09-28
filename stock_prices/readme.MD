@@ -4,3 +4,4 @@
 
 #Referencias
 Documentacion de Yfinance --> https://ranaroussi.github.io/yfinance/index.html
+Documentación avanzada --> https://ranaroussi.github.io/yfinance/reference/index.html
