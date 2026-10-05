@@ -1,41 +1,53 @@
 import yfinance as yf
-import pandas as pd
+import pandas_ta as ta 
+
+TICKER = "NU"
+TRADING_DAYS_YEAR = 252     # Dias de bolsa en un año aprox.
+AVG_VOLUME_WINDOW = 63      # Dias de bolsa en 3 meses aprox.
 
 
+def get_history(ticker, period="2y"):
+    """Descarga el historico OHLCV. 2y para que la MA200 tenga datos suficientes."""
+    hist = yf.Ticker(ticker).history(period=period)
+    if hist.empty:
+        raise ValueError(f"Sin datos para {ticker}: ticker invalido o Yahoo no respondio")
+    return hist
 
 
-
-def run_analisis():
-    stocks = yf.Ticker("NU")
-    name = stocks.info["longName"]
-    hist = stocks.history(period="1y")
-    lp = hist["Close"].iloc[-1]                                 # Ultimo precio
-    range52w = stocks.info["fiftyTwoWeekRange"]         # 52 week low price de ese ultimo dia                                  
-    regularvolume = stocks.info["regularMarketVolume"]  # Volumen regular de transaciones
-    volume = stocks.info["averageVolume"]               #volumen de transacción del ultimo dia 
-    
-    # Indicadores 
-    moving_averga_50 = 0                                # Media movil de 50 dias atras 
-    moving_averga_200 = 0                               # Media movil de 200 dias atras 
-    news = 0                                            # Traer las ultimas news relacioandas a la acción
-    rsi = 0                                             # Saca el RSI de la acción del ultimo dia 
+def get_name(ticker):
+    """Unico uso de .info: datos que NO estan en el historico. .get evita el KeyError."""
+    try:
+        return yf.Ticker(ticker).info.get("longName", ticker)
+    except Exception:
+        return ticker
 
 
-    # Logica de señales 
+def run_analisis(ticker=TICKER):
+    hist = get_history(ticker)
+    name = get_name(ticker)
 
+    # Datos base, todos calculados desde hist (una sola fuente, definiciones bajo tu control)
+    lp = hist["Close"].iloc[-1]                                          # Ultimo precio
+    low_52w = hist["Low"].tail(TRADING_DAYS_YEAR).min()                  # Minimo 52 semanas (intradia)
+    high_52w = hist["High"].tail(TRADING_DAYS_YEAR).max()                # Maximo 52 semanas (intradia)
+    last_volume = hist["Volume"].iloc[-1]                                # Volumen del ultimo dia
+    avg_volume = hist["Volume"].tail(AVG_VOLUME_WINDOW).mean()           # Volumen promedio 3 meses
 
-    # Impresión de resultados
-    print(lp)
-    print(range52w)
-    print(regularvolume,volume)
-    
+    # Indicadores (pendientes)
+    moving_average_50 = hist["Close"].rolling(50).mean().iloc[-1]       
+    moving_average_200 = hist["Close"].rolling(200).mean().iloc[-1]     
+    rsi = ta.rsi(hist["Close"],14).iloc[-1]                             # TODO: RSI(14) del ultimo dia, calcularlo mejor manual 
+    news = 0                                                            # TODO: ultimas noticias (stocks.news), mejor como contexto que como condicion
 
+    # Logica de señales
+    # TODO: definir reglas explicitas de compra
 
+    # Impresion de resultados
+    print(f"{name} ({ticker})")
+    print(f"Ultimo precio: {lp:.2f}")
+    print(f"Rango 52w: {low_52w:.2f} - {high_52w:.2f}")
+    print(f"Volumen ultimo dia: {last_volume:,.0f} | promedio 3m: {avg_volume:,.0f}")
 
 
 if __name__ == '__main__':
     run_analisis()
-
-
-
-

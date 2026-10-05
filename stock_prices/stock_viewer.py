@@ -1,20 +1,17 @@
 import yfinance as yf
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
-dat = yf.Ticker("^GSPC")
-name = dat.info["longName"]
-hist = dat.history(period="max")
-#price = round(hist["Close"].iloc[-1],2)
-#price_last_month = hist.resample('YE').last()
-price_per_month = hist["Close"].resample('ME').last()
+def plot_monthly_close(ticker="^GSPC"):
+    hist = yf.Ticker(ticker).history(period="max")
+    if hist.empty:
+        raise ValueError(f"Sin datos para {ticker}")
+    price_per_month = hist["Close"].resample('ME').last()
 
-plt.plot(price_per_month)
-plt.show()
+    plt.plot(price_per_month)
+    plt.title(f"{ticker} - cierre mensual")
+    plt.show()
 
 
-
-#print(dat.info)
-#print(price_per_year.tail())
-
+if __name__ == '__main__':
+    plot_monthly_close()
