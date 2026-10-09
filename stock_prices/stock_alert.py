@@ -1,5 +1,5 @@
 import yfinance as yf
-import pandas_ta as ta 
+
 
 TICKER = "NU"
 TRADING_DAYS_YEAR = 252     # Dias de bolsa en un año aprox.
@@ -21,6 +21,17 @@ def get_name(ticker):
     except Exception:
         return ticker
 
+def get_rsi(close):
+    delta = close.diff()
+    gains = delta.clip(lower=0)
+    avg_gains = gains.rolling(window=14).mean()
+    losses = - 1 * delta.clip(upper=0)
+    avg_losses = losses.rolling(window=14).mean()
+    rs = avg_gains / avg_losses
+    rsi = 100 - (100 / (1+rs) )
+    return rsi
+
+
 
 def run_analisis(ticker=TICKER):
     hist = get_history(ticker)
@@ -33,10 +44,11 @@ def run_analisis(ticker=TICKER):
     last_volume = hist["Volume"].iloc[-1]                                # Volumen del ultimo dia
     avg_volume = hist["Volume"].tail(AVG_VOLUME_WINDOW).mean()           # Volumen promedio 3 meses
 
-    # Indicadores (pendientes)
+    # Indicadores 
     moving_average_50 = hist["Close"].rolling(50).mean().iloc[-1]       
     moving_average_200 = hist["Close"].rolling(200).mean().iloc[-1]     
-    rsi = ta.rsi(hist["Close"],14).iloc[-1]                             # TODO: RSI(14) del ultimo dia, calcularlo mejor manual 
+    rsi_series = get_rsi(hist["Close"])                                            
+    rsi = rsi_series.iloc[-1]                             
     news = 0                                                            # TODO: ultimas noticias (stocks.news), mejor como contexto que como condicion
 
     # Logica de señales
