@@ -1,7 +1,7 @@
 import yfinance as yf
 
 
-TICKER = "NU"
+TICKERS = ["NU", "AAPL", "MSFT", "MELI", "NVDA"]    # Acciones a evaluar (cambia esta lista a tu gusto)
 TRADING_DAYS_YEAR = 252     # Dias de bolsa en un año aprox.
 AVG_VOLUME_WINDOW = 63      # Dias de bolsa en 3 meses aprox.
 
@@ -126,7 +126,7 @@ def format_message(name, ticker, lp, rsi, ma50, ma200, result):
     return "\n".join(lines)
 
 
-def run_analisis(ticker=TICKER):
+def run_analisis(ticker):
     hist = get_history(ticker)
     name = get_name(ticker)
 
@@ -155,4 +155,9 @@ def run_analisis(ticker=TICKER):
 
 
 if __name__ == '__main__':
-    run_analisis()
+    for ticker in TICKERS:
+        try:
+            run_analisis(ticker)
+        except Exception as e:                  # Un ticker con error no debe frenar a los demas
+            print(f"{ticker}: no se pudo analizar ({e})")
+        print("-" * 60)
