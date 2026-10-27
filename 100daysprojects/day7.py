@@ -25,5 +25,9 @@ def init():
 
 
     # Step 1 finalizado 
+
+#Ask 2 
+
+
 if __name__ == '__main__':
     init()
