@@ -7,6 +7,14 @@ def init():
     chosen_word = random.choice(words_list)
     #print(chosen_word)
 
+    letters = list(chosen_word)
+    guessed_blanks = []
+    for l in letters: 
+        guessed_blanks.append("_")
+
+    guessed_blanks = ",".join(guessed_blanks)
+    
+    print(guessed_blanks)
 
     # Aks for the user a word
     pre_guess = input("Guess a letter for the word:")
@@ -27,6 +35,8 @@ def init():
     # Step 1 finalizado 
 
 #Ask 2 
+
+    
 
 
 if __name__ == '__main__':
