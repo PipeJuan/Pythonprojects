@@ -17,24 +17,42 @@ def init():
     print(place_holder)
     
 
-    # Aks for the user a word
-    pre_guess = input("Guess a letter for the word:")
-    guess = pre_guess.lower()
+    # Fixed Variables
+    game_over = False
+    correct_letter = []
+    life = 5
 
+    # Aks for the user a word
+    while not game_over : 
+        guess = input("Guess a letter for the word:").lower()
+
+        if guess in chosen_word:
+            pass
+        else:
+            life -= 1
+            print(f"You lose a live! You have now {life}")
 
     #Verify is the letter user guessed is in the word select before
+        display = ""
+        for l in chosen_word:
+            if l == guess:
+                display += l
+                correct_letter.append(l)
+            elif l in correct_letter:
+                display += l
+            else:
+                display += "_"
 
-    display = ""
-
-    for l in chosen_word:
-        if l == guess:
-            display += l
+        if life > 0:
+            pass
+            print(display)
         else:
-            display += "_"
+            game_over = True
+            print("You lose the game!")
 
-    print(display)
-
-    
+        if "_" not in display:
+            game_over = True
+            print("You win!")
 
 
 if __name__ == '__main__':
