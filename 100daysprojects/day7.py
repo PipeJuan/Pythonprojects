@@ -20,7 +20,7 @@ def init():
     # Fixed Variables
     game_over = False
     correct_letter = []
-    life = 5
+    life = 6
 
     # Aks for the user a word
     while not game_over : 
