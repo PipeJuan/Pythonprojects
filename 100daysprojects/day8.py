@@ -39,7 +39,7 @@ def greet_w_2parameters(name,location):
 name = "Angela"
 location = "Soplaviento"
 
-greet_w_2parameters(name,location) """
+greet_w_2parameters(name,location) 
 
 
 # Dos parametros y for loop
@@ -64,4 +64,14 @@ def calculate_love_score(name1,name2):
 
 
 
-calculate_love_score("Felipe","Angela")
+calculate_love_score("Felipe","Angela")"""
+
+
+#Caeser Cipher 
+
+# Design a econder and decoder mesaages
+
+#1 Pensemos en la logica de construcción 
+#2 funcionamiento de la logica 
+#3 Herramientas que necesiot para que funciones 
+#4 test para ver si funciona 
