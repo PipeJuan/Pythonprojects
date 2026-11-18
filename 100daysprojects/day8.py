@@ -75,3 +75,74 @@ calculate_love_score("Felipe","Angela")"""
 #2 funcionamiento de la logica 
 #3 Herramientas que necesiot para que funciones 
 #4 test para ver si funciona 
+
+
+import string
+
+
+
+def init():
+
+    def decrypt():
+        pass
+
+
+    def encrypt(word,shift):
+
+        alphabet = list(string.ascii_lowercase)
+        encoder_word = []
+
+        for l in word: 
+            initial_position = alphabet.index(l)
+            final_position = initial_position + shift
+            encoder_word.append(alphabet[final_position])
+
+        word_encoder = "".join(encoder_word)
+        
+        #print(word_encoder)
+
+        return word_encoder
+            
+        
+    active = True
+    decision = ""
+    word = ""
+    shift = 0
+    word_encoder = ""
+    decoder_word = ""
+    
+    while active != False:
+        
+
+        decision = input("What do you want to do Encrypt a phrase, Decrypt a phrase or logout the tool. n/ E for Encrypt, D for Decrypt & L for logout : ").upper()
+        #print(decision)
+
+        if decision == "L":
+
+            print("See you next time")
+            active = False
+
+        elif decision == "D":
+
+            if word == "":
+                print("There is no word for Decrypt!")
+            else:
+                decrypt(word)
+
+        elif decision == "E":
+
+            if word == "":
+                word = input("What phrase do you wnat to encrypt?: ")
+                shift = int(input("How many shift your phrase will be encrypted?: "))
+                word_encoder = encrypt(word,shift)
+                print(f"Your encoder phrase is {word_encoder}")
+                
+            else:
+                print("You have a message to decrypt first, decrypte it and then encryp a new message")
+
+        else:
+            print("You chosee an invalid option, rembember E for Encrypt, D for Decrypt & L for logout")
+
+
+if __name__ == '__main__':
+    init()
