@@ -71,9 +71,9 @@ calculate_love_score("Felipe","Angela")"""
 
 # Design a econder and decoder mesaages
 
-#1 Pensemos en la logica de construcción 
-#2 funcionamiento de la logica 
-#3 Herramientas que necesiot para que funciones 
+#1 Pensemos en la logica de construcción X
+#2 funcionamiento de la logica x
+#3 Herramientas que necesiot para que funciones x
 #4 test para ver si funciona 
 
 
@@ -83,8 +83,20 @@ import string
 
 def init():
 
-    def decrypt():
-        pass
+    def decrypt(word_encoder,shift):
+
+        alphabet = list(string.ascii_lowercase)
+        decoder_word = []
+        
+        for l in word_encoder: 
+            final_position = alphabet.index(l)
+            initial_position = final_position - shift
+            decoder_word.append(alphabet[initial_position])
+        
+        decoder_word = "".join(decoder_word)
+        
+        return decoder_word
+        
 
 
     def encrypt(word,shift):
@@ -98,8 +110,6 @@ def init():
             encoder_word.append(alphabet[final_position])
 
         word_encoder = "".join(encoder_word)
-        
-        #print(word_encoder)
 
         return word_encoder
             
@@ -114,7 +124,7 @@ def init():
     while active != False:
         
 
-        decision = input("What do you want to do Encrypt a phrase, Decrypt a phrase or logout the tool. n/ E for Encrypt, D for Decrypt & L for logout : ").upper()
+        decision = input("What do you want to do Encrypt a phrase, Decrypt a phrase or logout the tool.\nE for Encrypt, D for Decrypt & L for logout : ").upper()
         #print(decision)
 
         if decision == "L":
@@ -127,13 +137,15 @@ def init():
             if word == "":
                 print("There is no word for Decrypt!")
             else:
-                decrypt(word)
+                shift = int(input("How many shift your phrase will be decrypted?: \n"))
+                decoder_word = decrypt(word_encoder,shift)
+                print(f"Your encoder phrase is {decoder_word}")
 
         elif decision == "E":
 
             if word == "":
-                word = input("What phrase do you wnat to encrypt?: ")
-                shift = int(input("How many shift your phrase will be encrypted?: "))
+                word = input("What phrase do you wnat to encrypt?: \n")
+                shift = int(input("How many shift your phrase will be encrypted?: \n"))
                 word_encoder = encrypt(word,shift)
                 print(f"Your encoder phrase is {word_encoder}")
                 
