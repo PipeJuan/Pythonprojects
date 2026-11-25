@@ -33,7 +33,48 @@ print(student_grades)
    anteriores sepan cual fue la apuesta de sus competidores, usando dictionarios.
 """
 
-#1 Pensemos en la logica de encendido y apagado del programa
-#2 funcionamiento de recolección y guardado de datos y borrado o limpieza de la pantalla al poner un bid
+#1 Pensemos en la logica de encendido y apagado del programa - Check
+#2 funcionamiento de recolección y guardado de datos y borrado o limpieza de la pantalla al poner un bid - check 
 #3 funcion que nos ayudará a decidir el mejor apostador
 #4 test para ver si funciona 
+
+
+def init():
+    
+    def best_bidder(bids):
+        pass
+    
+    
+    more_bids = True
+    name = ""
+    person_bid = 0
+    bids = {}
+
+    while more_bids != False:
+        
+        print("Welcome to secret auction program.")
+        #Recolección de la data 
+
+        name = str(input("What is your name: \n"))
+        person_bid = int(input("What is your bid $: \n"))
+
+        bids[name] = person_bid
+
+
+        # Control para seguir el programa o finalizar el programa 
+        additional_bids = input("Are there any other bidders: Type 'yes' or 'no'.\n")
+
+        if additional_bids == "yes":
+            print("\n"* 100)
+            more_bids = True
+        else:
+            # ejecuta la función decisiora del mejor bid 
+            
+            more_bids = False
+            print(bids)
+            print("Programa termina")
+
+
+
+if __name__ == '__main__':
+    init()
