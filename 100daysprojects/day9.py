@@ -41,38 +41,52 @@ print(student_grades)
 
 def init():
     
-    def best_bidder(bids):
-        pass
+    def best_bidder(total_bids):
+        print(total_bids)
+        best_bid = {"user": "default_user", "bid": 0}
+
+        for t in total_bids:
+        
+            if t["bid"] >= best_bid["bid"]:
+                best_bid = t
+            
+        return best_bid
+        
+                
+            
     
     
     more_bids = True
-    name = ""
-    person_bid = 0
-    bids = {}
+    total_bids = []
 
     while more_bids != False:
         
         print("Welcome to secret auction program.")
         #Recolección de la data 
 
-        name = str(input("What is your name: \n"))
-        person_bid = int(input("What is your bid $: \n"))
+        name = str(input("What is your name:\n"))
+        person_bid = int(input("What is your bid $:\n"))
+        bids = {}
 
-        bids[name] = person_bid
+        bids["user"] = name
+        bids["bid"] = person_bid
+
+        total_bids.append(bids)
 
 
         # Control para seguir el programa o finalizar el programa 
-        additional_bids = input("Are there any other bidders: Type 'yes' or 'no'.\n")
+        additional_bids = input("Are there any other bidders: Type 'yes' or 'no'.\n").strip().lower()
 
         if additional_bids == "yes":
             print("\n"* 100)
             more_bids = True
         else:
             # ejecuta la función decisiora del mejor bid 
-            
+            best_bid = best_bidder(total_bids)
+            print(f"La mejor apuesta es de {best_bid["user"]} con ${best_bid["bid"]}")
             more_bids = False
-            print(bids)
-            print("Programa termina")
+            print("Programa finalizó")
+            
 
 
 
