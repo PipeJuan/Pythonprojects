@@ -43,18 +43,15 @@ def init():
     
     def best_bidder(total_bids):
         print(total_bids)
-        best_bid = {"user": "default_user", "bid": 0}
+        best_bid = total_bids[0]
 
         for t in total_bids:
         
-            if t["bid"] >= best_bid["bid"]:
+            if t['bid'] >= best_bid['bid']:
                 best_bid = t
             
         return best_bid
-        
-                
-            
-    
+
     
     more_bids = True
     total_bids = []
@@ -63,11 +60,31 @@ def init():
         
         print("Welcome to secret auction program.")
         #Recolección de la data 
+        
+        while True:
 
-        name = str(input("What is your name:\n"))
-        person_bid = int(input("What is your bid $:\n"))
+            name = str(input("What is your name:\n")).strip()
+
+            if name:
+                break
+            print("You need a name to continue in the auction")
+
+
+            
+        while True:
+            try:
+                person_bid = int(input("What is your bid $:\n"))
+
+                if person_bid > 0:
+                    break
+
+                print("El valor debe ser mayor a $0")
+
+            except ValueError:
+                print("Este valor no es permitido, ingresa un numero entero")
+
+
         bids = {}
-
         bids["user"] = name
         bids["bid"] = person_bid
 
@@ -75,7 +92,17 @@ def init():
 
 
         # Control para seguir el programa o finalizar el programa 
-        additional_bids = input("Are there any other bidders: Type 'yes' or 'no'.\n").strip().lower()
+
+        while True:
+            
+            additional_bids = input("Are there any other bidders: Type 'yes' or 'no'.\n").strip().lower()
+
+            if additional_bids == "yes" or additional_bids == "no":
+                break
+            print("This question just recieve 'yes' or 'no' answers !")
+            
+
+
 
         if additional_bids == "yes":
             print("\n"* 100)
@@ -83,7 +110,7 @@ def init():
         else:
             # ejecuta la función decisiora del mejor bid 
             best_bid = best_bidder(total_bids)
-            print(f"La mejor apuesta es de {best_bid["user"]} con ${best_bid["bid"]}")
+            print(f"La mejor apuesta es de {best_bid['user']} con ${best_bid['bid']}")
             more_bids = False
             print("Programa finalizó")
             
